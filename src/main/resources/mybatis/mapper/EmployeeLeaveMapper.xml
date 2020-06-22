@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.zdsc.mapper.EmployeeLeaveMapper">
+
+    <!-- tableColumns  所有列 -->
+    <sql id="tableColumns">
+        <trim suffix="" suffixOverrides=",">
+            id,
+            organization_id,
+            employee_id,
+            entry_date,
+            leave_type,
+            leave_date,
+            leave_reason,
+            residual_annual_leave,
+            annual_leave_handle,
+            overtime_hours,
+            overtime_hours_handle,
+            compensation_amount,
+            create_user_id,
+            create_time,
+        </trim>
+    </sql>
+
+    <!-- insertColumns 入库列 -->
+    <sql id="insertColumns">
+        <trim suffix="" suffixOverrides=",">
+                <if test="id != null and id != '' ">
+                    id,
+                </if>
+                <if test="organizationId != null and organizationId != '' ">
+                    organization_id,
+                </if>
+                <if test="employeeId != null and employeeId != '' ">
+                    employee_id,
+                </if>
+                <if test="entryDate != null and entryDate != '' ">
+                    entry_date,
+                </if>
+                <if test="leaveType != null and leaveType != '' ">
+                    leave_type,
+                </if>
+                <if test="leaveDate != null and leaveDate != '' ">
+                    leave_date,
+                </if>
+                <if test="leaveReason != null and leaveReason != '' ">
+                    leave_reason,
+                </if>
+                <if test="residualAnnualLeave != null and residualAnnualLeave != '' ">
+                    residual_annual_leave,
+                </if>
+                <if test="annualLeaveHandle != null and annualLeaveHandle != '' ">
+                    annual_leave_handle,
+                </if>
+                <if test="overtimeHours != null and overtimeHours != '' ">
+                    overtime_hours,
+                </if>
+                <if test="overtimeHoursHandle != null and overtimeHoursHandle != '' ">
+                    overtime_hours_handle,
+                </if>
+                <if test="compensationAmount != null and compensationAmount != '' ">
+                    compensation_amount,
+                </if>
+                <if test="createUserId != null and createUserId != '' ">
+                    create_user_id,
+                </if>
+                <if test="createTime != null and createTime != '' ">
+                    create_time,
+                </if>
+        </trim>
+    </sql>
+
+
+    <!-- insertParams  入库值 -->
+    <sql id="insertParams">
+        <trim suffix="" suffixOverrides=",">
+                <if test="id != null and id != '' ">
+                    id,
+                </if>
+                <if test="organizationId != null and organizationId != '' ">
+                    organizationId,
+                </if>
+                <if test="employeeId != null and employeeId != '' ">
+                    employeeId,
+                </if>
+                <if test="entryDate != null and entryDate != '' ">
+                    entryDate,
+                </if>
+                <if test="leaveType != null and leaveType != '' ">
+                    leaveType,
+                </if>
+                <if test="leaveDate != null and leaveDate != '' ">
+                    leaveDate,
+                </if>
+                <if test="leaveReason != null and leaveReason != '' ">
+                    leaveReason,
+                </if>
+                <if test="residualAnnualLeave != null and residualAnnualLeave != '' ">
+                    residualAnnualLeave,
+                </if>
+                <if test="annualLeaveHandle != null and annualLeaveHandle != '' ">
+                    annualLeaveHandle,
+                </if>
+                <if test="overtimeHours != null and overtimeHours != '' ">
+                    overtimeHours,
+                </if>
+                <if test="overtimeHoursHandle != null and overtimeHoursHandle != '' ">
+                    overtimeHoursHandle,
+                </if>
+                <if test="compensationAmount != null and compensationAmount != '' ">
+                    compensationAmount,
+                </if>
+                <if test="createUserId != null and createUserId != '' ">
+                    createUserId,
+                </if>
+                <if test="createTime != null and createTime != '' ">
+                    createTime,
+                </if>
+        </trim>
+    </sql>
+
+    <!-- updateParams  更新列 -->
+    <sql id="updateParams">
+        <trim suffix="" suffixOverrides=",">
+                <if test="id != null ">
+                    id=id,
+                </if>
+                <if test="organization_id != null ">
+                    organization_id=organizationId,
+                </if>
+                <if test="employee_id != null ">
+                    employee_id=employeeId,
+                </if>
+                <if test="entry_date != null ">
+                    entry_date=entryDate,
+                </if>
+                <if test="leave_type != null ">
+                    leave_type=leaveType,
+                </if>
+                <if test="leave_date != null ">
+                    leave_date=leaveDate,
+                </if>
+                <if test="leave_reason != null ">
+                    leave_reason=leaveReason,
+                </if>
+                <if test="residual_annual_leave != null ">
+                    residual_annual_leave=residualAnnualLeave,
+                </if>
+                <if test="annual_leave_handle != null ">
+                    annual_leave_handle=annualLeaveHandle,
+                </if>
+                <if test="overtime_hours != null ">
+                    overtime_hours=overtimeHours,
+                </if>
+                <if test="overtime_hours_handle != null ">
+                    overtime_hours_handle=overtimeHoursHandle,
+                </if>
+                <if test="compensation_amount != null ">
+                    compensation_amount=compensationAmount,
+                </if>
+                <if test="create_user_id != null ">
+                    create_user_id=createUserId,
+                </if>
+                <if test="create_time != null ">
+                    create_time=createTime,
+                </if>
+        </trim>
+    </sql>
+    <select id="selectList1"
+           resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"></include> from t_employee_leave
+            ${ew.customSqlSegment}
+    </select>
+
+    <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="com.example.zdsc.entity.EmployeeLeave">
+                    <id column="id" property="id" />
+                    <result column="organization_id" property="organizationId" />
+                    <result column="employee_id" property="employeeId" />
+                    <result column="entry_date" property="entryDate" />
+                    <result column="leave_type" property="leaveType" />
+                    <result column="leave_date" property="leaveDate" />
+                    <result column="leave_reason" property="leaveReason" />
+                    <result column="residual_annual_leave" property="residualAnnualLeave" />
+                    <result column="annual_leave_handle" property="annualLeaveHandle" />
+                    <result column="overtime_hours" property="overtimeHours" />
+                    <result column="overtime_hours_handle" property="overtimeHoursHandle" />
+                    <result column="compensation_amount" property="compensationAmount" />
+                    <result column="create_user_id" property="createUserId" />
+                    <result column="create_time" property="createTime" />
+        </resultMap>
+
+        <!-- 通用查询结果列 -->
+        <sql id="Base_Column_List">
+        id, organization_id, employee_id, entry_date, leave_type, leave_date, leave_reason, residual_annual_leave, annual_leave_handle, overtime_hours, overtime_hours_handle, compensation_amount, create_user_id, create_time
+    </sql>
+
+</mapper>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="true">
+    <!-- 输出到文件的日志格式 -->
+	<property name="FILE_PATTERN" value="[%date{yyyy-MM-dd HH:mm:ss}][%thread][%level][%logger{30}] - %msg%n"/>
+     <!-- test文件路径 -->
+    <property name="LOG_HOME" value="/bojunLog/employeeService" />
+    <!-- 用来定义项目名称 -->
+	<property name="APP_NAME" value="employee-service"/>
+        
+    <logger name="com.bojun" level="DEBUG"/>
+    <!-- 日志文件输出 -->
+    <!-- 日志文件输出 -->
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    	<file>${LOG_HOME}/${APP_NAME}.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<FileNamePattern>${LOG_HOME}/${APP_NAME}.log.%d{yyyy-MM-dd}.%i
+			</FileNamePattern>
+			<maxHistory>10</maxHistory>
+			<timeBasedFileNamingAndTriggeringPolicy
+				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<!-- 日志文件最大30M -->
+				<maxFileSize>30MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+		<encoder>
+			<Pattern>${FILE_PATTERN}</Pattern>
+		</encoder>
+	</appender>
+    
+    <!-- 错误日志输出 -->
+	<appender name="ERR_FILE"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_HOME}/${APP_NAME}.ERR.log</file>
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">   
+			<level>ERROR</level>   
+			<onMatch>ACCEPT</onMatch>
+			<onMismatch>DENY</onMismatch>
+		</filter>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- 每天生成一个日志文件，保存10天的日志文件 -->
+			<FileNamePattern>${LOG_HOME}/${APP_NAME}.ERR.log.%d{yyyy-MM-dd}.%i
+			</FileNamePattern>
+			<maxHistory>10</maxHistory>
+			<timeBasedFileNamingAndTriggeringPolicy
+				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<!-- 日志文件最大30M -->
+				<maxFileSize>30MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+		<encoder>
+			<Pattern>${FILE_PATTERN}</Pattern>
+		</encoder>
+	</appender>
+
+
+	<!-- 控制台输出 -->
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<pattern>${FILE_PATTERN}</pattern>
+		</encoder>
+	</appender>
+	<param name="encoding" value="UTF-8" />
+	
+    <root level="INFO">
+        <appender-ref ref="FILE" />
+        <appender-ref ref="ERR_FILE" />
+        <appender-ref ref="STDOUT" />
+    </root>
+</configuration>

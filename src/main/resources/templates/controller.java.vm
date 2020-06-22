@@ -1,0 +1,92 @@
+package ${package.Controller};
+
+
+import org.springframework.web.bind.annotation.RequestMapping;
+
+#if(${restControllerStyle})
+import org.springframework.web.bind.annotation.RestController;
+#else
+import org.springframework.stereotype.Controller;
+#end
+#if(${superControllerClassPackage})
+import ${superControllerClassPackage};
+#end
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import com.bojun.enums.ResponseCodeEnum;
+import com.bojun.base.controller.BoJunBaseController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+/**
+ * @Model： $!{table.comment}前端控制器
+ * @Description: $!{table.comment}前端控制器
+ * @author ${author}
+ * @since ${date}
+ */
+#if(${restControllerStyle})
+@RestController
+#else
+@Controller
+#end
+#if(${kotlin})
+class ${table.controllerName}#if(${superControllerClass}) : ${superControllerClass}()#end
+
+#else
+#if(${superControllerClass})
+public class ${table.controllerName} extends ${superControllerClass} {
+            Log log=LogFactory.getLog(${table.controllerName}.class);
+    @Autowired
+    private I${table.entityName}Service  ${table.entityPath}Service;
+
+    /**
+     * @Description 添加$!{table.comment}
+     * @author ${author}
+     * @return
+     *  ${date}
+     */
+    @RequestMapping(value = "/save${table.entityName}", method = RequestMethod.POST)
+    public void save${table.entityName}(@RequestBody ${table.entityName}DTO ${table.name}DTO){
+            try{
+            if(${table.entityPath}Service.save(${table.name}DTO)){
+            outJson(successInfo());
+            }else{
+            outJson(info(ResponseCodeEnum.BAD_REQUEST.getCode(),"操作失败"));
+            }
+            }catch(Exception e){
+            log.error("save${table.entityName}:",e);
+            outJson(errorInfo(ResponseCodeEnum.EXCEPTION_REQUEST.getCode()));
+            }
+            }
+            }
+    #else
+    public class ${table.controllerName} {
+    @Autowired
+    private ${table.entityName}Service  ${table.name}Service;
+
+
+    /**
+     * @Description 添加$!{table.comment}
+     * @author ${author}
+     * @return
+     *  ${date}
+     */
+    @RequestMapping(value="/save${table.entityName}", method = RequestMethod.POST)
+    public void save${table.entityName}(@RequestBody ${table.entityName}DTO ${table.name}DTO){
+            try{
+            if(${table.entityName}Service.save(${table.name}DTO)){
+            outJson(successInfo());
+            }else{
+            outJson(info(ResponseCodeEnum.BAD_REQUEST.getCode(),"操作失败"));
+            }
+            }catch(Exception e){
+            log.error("save${table.entityName}:",e);
+            outJson(errorInfo(ResponseCodeEnum.EXCEPTION_REQUEST.getCode()));
+            }
+            }
+
+            }
+    #end
+
+#end

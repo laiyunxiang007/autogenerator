@@ -1,0 +1,30 @@
+package ${package.Entity};
+
+#foreach($pkg in ${table.importPackages})
+import ${pkg};
+#end
+#if(${swagger2})
+import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+#end
+#if(${entityLombokModel})
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+    #if(${chainModel})
+    import lombok.experimental.Accessors;
+    #end
+#end
+
+/**
+ * @Model： $!{table.comment}拓展
+ * @Description: $!{table.comment}拓展
+ * @author ${author}
+ * @since ${date}
+ */
+#if(${entityLombokModel})
+@Data
+#end
+public class ${entity} extends ${table.name}{
+
+}

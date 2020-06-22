@@ -1,0 +1,107 @@
+package ${package.Controller};
+
+
+import org.springframework.web.bind.annotation.RequestMapping;
+
+#if(${restControllerStyle})
+import org.springframework.web.bind.annotation.RestController;
+#else
+import org.springframework.stereotype.Controller;
+#end
+#if(${superControllerClassPackage})
+import ${superControllerClassPackage};
+#end
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import io.swagger.annotations.*;
+import com.bojun.response.Results;
+import com.bojun.enums.ResponseCodeEnum;
+import com.bojun.contants.Contants;
+import com.bojun.author.AuthAnnotation;
+import org.springframework.beans.factory.annotation.Autowired;
+import com.bojun.log.SystemLog;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.beans.BeanUtils;
+/**
+ *
+ * @Model： $!{table.comment}前端控制器
+ * @Description: $!{table.comment}前端控制器
+ * @author ${author}
+ * @since ${date}
+ */
+#if(${restControllerStyle})
+@RestController
+#else
+@Controller
+#end
+@Api(tags = {  })
+@RequestMapping("#if(${package.ModuleName})/${package.ModuleName}#end/#if(${controllerMappingHyphenStyle})${controllerMappingHyphen}#else${table.entityPath}#end")
+#if(${kotlin})
+class ${table.controllerName}#if(${superControllerClass}) : ${superControllerClass}()#end
+
+#else
+#if(${superControllerClass})
+public class ${table.controllerName} extends ${superControllerClass} {
+            Log log =LogFactory.getLog(${table.controllerName}.class);
+
+    @Autowired
+    private ${table.entityName}Service  ${table.name}Service;
+
+
+        /**
+         * @Description 添加$!{table.comment}
+         * @author ${author}
+         * @return
+         *  ${date}
+         */
+@ApiOperation(value = " ", notes = " （${author}）")
+@ApiOperationSupport(order = 1)
+@RequestMapping(value = "/save${table.entityName}", method = RequestMethod.POST)
+@SystemLog(action = "save${table.entityName}", description = "  ", operationType = Contants.ADD_REQUEST)
+@AuthAnnotation(action = "save${table.entityName}")
+public Results save${table.entityName}(@RequestBody @Valid Add${table.entityName}ParamVo add${table.entityName}PramVo){
+        try{
+    ${table.entityName}DTO ${table.name}DTO=new ${table.entityName}DTO();
+        BeanUtils.copyProperties(add${table.entityName}PramVO, ${table.name}DTO);
+        String result= ${table.name}Service.save${table.entityName}(${table.name}DTO);
+        return returnResults(result);
+        }catch(Exception e){
+        log.error("save${table.name}:",e);
+        return failResults(ResponseCodeEnum.EXCEPTION_REQUEST.getCode());
+        }
+        }
+#else
+public class ${table.controllerName} {
+        Log log=LogFactory.getLog(${table.controllerName}.class);
+
+@Autowired
+private ${table.entityName}Service  ${table.name}Service;
+
+    /**
+     * @Description 添加$!{table.comment}
+     * @author ${author}
+     * @return
+     *  ${date}
+     */
+@ApiOperation(value = " ", notes = " （${author}）")
+@ApiOperationSupport(order = 1)
+@RequestMapping(value = "/save${table.entityName}", method = RequestMethod.POST)
+@SystemLog(action = "save${table.entityName}", description = "  ", operationType = Contants.ADD_REQUEST)
+@AuthAnnotation(action = "save${table.entityName}")
+public Results save${table.entityName}(@RequestBody @Valid Add${table.entityName}ParamVo add${table.entityName}PramVO) {
+        try {
+    ${table.entityName}DTO ${table.name}DTO = new ${table.entityName}DTO();
+        BeanUtils.copyProperties(add${table.entityName}PramVO, ${table.name}DTO);
+        String result = ${table.name}Service.save${table.entityName}(${table.name}DTO);
+        return returnResults(result);
+        } catch (Exception e) {
+        log.error("save${table.name}:", e);
+        return failResults(ResponseCodeEnum.EXCEPTION_REQUEST.getCode());
+        }
+        }
+#end
+}
+
+
+
+#end

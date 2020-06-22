@@ -1,0 +1,19 @@
+package ${package.Controller};
+
+import io.swagger.annotations.*;
+import org.springframework.stereotype.Component;
+
+
+/**
+ *
+ * @Model： $!{table.comment}熔断器
+ * @Description: $!{table.comment}熔断器
+ * @author ${author}
+ * @since ${date}
+ */
+@Component
+#if(${superControllerClass})
+public class ${table.controllerName}Hystrix implements ${superControllerClass} {
+
+}
+#end

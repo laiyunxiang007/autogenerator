@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.zdsc.dao.TJobTitleDictDAO">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.bojun.employee.entity.JobTitleDict">
+        <id column="job_title_id" property="jobTitleId" />
+        <result column="job_title_name" property="jobTitleName" />
+        <result column="type" property="type" />
+        <result column="healthcare_type" property="healthcareType" />
+        <result column="nature_id" property="natureId" />
+        <result column="job_level" property="jobLevel" />
+        <result column="show_index" property="showIndex" />
+        <result column="is_enabled" property="isEnabled" />
+        <result column="test" property="test" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        job_title_id, job_title_name, type, healthcare_type, nature_id, job_level, show_index, is_enabled, test
+    </sql>
+
+</mapper>
